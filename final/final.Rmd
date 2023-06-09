@@ -1,0 +1,379 @@
+---
+title: "Suç Oranlarının Ekonomik Verilerle Bağdaşlaştırılması"
+author: 
+  - İbrahim Batuhan Koc[^1]
+bibliography: ../new_final/bibliography
+csl: ../new_final/csl/apa-tr.csl
+header-includes:
+  - \usepackage{polyglossia}
+  - \setmainlanguage{turkish}
+  - \usepackage{booktabs}
+  - \usepackage{caption} 
+  - \captionsetup[table]{skip=10pt}
+output:
+  bookdown::pdf_document2:
+    fig_caption: yes
+    fig_height: 3
+    fig_width: 4
+    keep_tex: no
+    latex_engine: xelatex
+    number_sections: yes
+    toc: no
+geometry: margin=0.15in
+link-citations: yes
+urlcolor: blue
+fontsize: 11pt
+biblio-style: apalike
+abstract:
+  Bu çalışma Avrupa ülkelerindeki ekonomik refah seviyeleri ile suç oranları arasındaki ilişkiyi incelemektir. Bu bağlamda, Danimarka, İtalya, Fransa, Yunanistan, Bulgaristan ve Romanya ülkelerinin 2011-2021 yılları arasındaki Gini Oranları, İstihdam Oranları ve Suç oranları verileri grafiksel olarak incelenmiştir. İtalya'nın istihdam oranları ve suç oranları ile Gini oranı ve suç oranı arasındaki ilişkileri korelasyon analizleriyle değerlendirilmiştir.
+ Özellikle İtalya'ya odaklanılarak, İtalya'nın istihdam oranları ve suç oranları arasındaki ilişki incelenmiştir. Yapılan korelasyon analizi, istihdam oranlarının artmasıyla suç oranlarında bir azalma olduğunu göstermiştir. Bu sonuç, işsizlik oranının suç oranlarını etkileyebileceğini ve istihdam politikalarının suçla mücadelede etkili bir rol oynayabileceğini düşündürmektedir.
+
+ Diğer yandan, Gini oranı ile suç oranı arasındaki ilişki incelenmiş ve ters yönlü bir ilişkinin olduğu görülmüştür. Ancak, yapılan korelasyon analizi testinin gücünün düşük olduğu belirlenmiştir. Bu durum, Gini oranı ve suç oranı arasındaki ilişkinin istatistiksel olarak daha zayıf olduğunu ve diğer faktörlerin de bu ilişkiyi etkileyebileceğini göstermektedir. Bu nedenle, Gini oranı ve suç oranı arasındaki ilişkinin daha ayrıntılı olarak incelenmesi ve farklı analiz yöntemlerinin kullanılması önerilmektedir.
+
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+<!-- ======================================================================= -->
+<!-- ============================== NOTLAR ================================= -->
+<!-- ======================================================================= -->
+[^1]: 21080156, [Github Repo](https://github.com/ibatuhankoc/final_odev.git)
+
+\newpage
+
+
+# Giriş
+ Suç, toplumların temel yapısını ve bireylerin hayatlarını önemli ölçüde etkileyen karmaşık bir olgudur. Suçun sebepleri, sonuçları ve etkileri üzerine yapılan araştırmalar, siyaset bilimciler, hukuk bilimciler ve ekonomistler gibi farklı disiplinlerden gelen uzmanlar tarafından çeşitli perspektiflerle ele alınmaktadır. Özellikle, "Suç Ekonomisi" kavramı, suç olayları ile yoksulluk, sosyal dışlanma, gelir eşitsizliği, göç, enflasyon gibi ekonomik sorunlar arasında karmaşık ilişkiler kurmayı amaçlamaktadır. Bu ilişkiler, suçun toplumlar üzerindeki etkisini anlamak ve suçla mücadele stratejilerini geliştirmek açısından büyük öneme sahiptir.[@ivaschenko2012role]
+
+ Dünya genelinde, durgun piyasalar veya mali krizlerle mücadele eden ülkelerde suça bulaşma oranlarının arttığı gözlenmektedir. Ekonomik zorluklarla karşılaşan bireyler, işsizlik, yoksulluk ve sosyal dışlanma gibi faktörler nedeniyle suç eğiliminde artış yaşayabilirler. Ekonomik krizlerin etkisiyle, kaynakların azalması ve gelir eşitsizliğinin artması gibi durumlar, suç olaylarını tetikleyebilir ve suç oranlarının yüksek seviyelerde kalmasına yol açabilir. Bu nedenle, hükümetlerin ekonomik durgunluk dönemlerinde bile önleyici kamu harcamaları yapması, suçla mücadelede etkili bir strateji olarak değerlendirilmektedir.[@wu2012crime]
+
+ Sosyoekonomik çalışmalar, suç oranlarının ekonomik refah göstergeleriyle yakından ilişkili olduğunu göstermektedir. Gelir düzeyi, işsizlik oranı, eğitim seviyesi, sosyal hizmetlere erişim gibi ekonomik ve sosyal faktörler, suçun yaygınlığı üzerinde etkili olabilmektedir. Örneğin, yüksek gelir eşitsizliği ve kısıtlı ekonomik fırsatlar, bireyleri suç işlemeye itebilir. Bununla birlikte, suçun azalması için sağlanan ekonomik refah ve sosyal destek sistemleri, suç eğilimini düşürebilir ve toplumun genel güvenliğini artırabilir.[@dritsakis2009effect]
+
+## Çalışmanın Amacı
+ Bu çalışmanın temel amacı, Avrupa ülkelerindeki ekonomik refah seviyelerini belirleyen istatistiksel verileri kullanarak suç oranlarını analiz etmek ve suç eğilimlerini incelemektir. Bu bağlamda, Eurostat verilerinde sunulan suç kategorilerindeki suç oranlarını karşılaştırarak, Avrupa ülkelerindeki vatandaşların suç eğilimlerini araştırmayı hedeflemekteyim.
+
+ Çalışmamızın öncelikli amacı, suç ve ekonomik refah arasındaki ilişkiyi daha iyi anlamak ve suçla mücadele politikalarının geliştirilmesinde değerli bir yol haritası sunmaktır. Suçun kompleks bir olgu olduğu ve birçok faktörün suç eğilimlerini etkilediği bilinmektedir. Bu faktörler arasında ekonomik durumun da önemli bir rol oynadığı düşünülmektedir.
+
+ Bu nedenle, çalışmamızda, suç oranları ile ekonomik refah arasındaki ilişkiyi incelemek için istatistiksel verilere dayanacağız. Avrupa ülkeleri üzerinde gerçekleştirilecek bu analiz, suç eğilimlerinin ekonomik refah düzeyleriyle nasıl ilişkilendirildiğini belirlemeye çalışacak ve böylece suçun ekonomik faktörlerle nasıl etkileşime girdiğini anlamamıza yardımcı olacaktır.
+
+## Literatür 
+
+ Bu çalışma, suç ve ekonomi arasındaki ilişkiyi incelemek ve Avrupa ülkelerindeki ekonomik refah seviyeleri ile suç oranları arasındaki ilişkiyi anlamak amacıyla gerçekleştirilmektedir. Bu alandaki çeşitli çalışmalar, suç ve ekonomi arasındaki ilişkinin karmaşıklığını vurgulamıştır.
+
+ Brittany Street'in "The Impact of Economic Opportunity on Criminal Behavior: Evidence from the Fracking Boom" çalışması, ABD'nin Kuzey Dakota bölgesindeki madencilik yatırımlarının ceza davalarında %22 azalışa neden olduğunu ortaya koymuştur. Bu çalışma, ekonomik fırsatların suç üzerindeki etkisini vurgulamakta ve suç oranlarının ekonomik gelişmelerle nasıl değişebileceğini göstermektedir.
+
+ Ahmet Yılmaz ATA'nın "Ücretler, İşsizlik Ve Suç Arasındaki İlişki: Yatay-Kesit Analizi" çalışması, ücret düzeyleri ile suç arasında açık bir ilişki bulmuştur. Bu çalışma, ekonomik faktörlerin suç eğilimleri üzerindeki etkisini anlamak için ekonomik değişkenlerin kullanılabileceğini göstermektedir.
+
+ Özlem Kızılgöl ve Sibel Selim'in "SOCIO-ECONOMIC AND DEMOGRAPHIC DETERMINANTS OF CRIME BY PANEL COUNT DATA ANALYSIS: THE CASE OF EU 28 AND TURKEY" çalışması, ekonomik büyüme ve enflasyonun suç üzerinde net bir etkisinin olmadığını ortaya koymuştur. Ancak, bu çalışma, kentleşmiş bölgelerde suç oranlarının arttığını, okullaşma oranının ve polis devriyelerinin sık olduğu bölgelerde ise suç oranının azaldığını göstermiştir. Bu da, sosyal ve demografik faktörlerin suç üzerindeki etkisine dikkat çekmektedir.
+
+ Dullah Mulok, Mori Kogid, Jaratin Lily ve Rozilee Asid'in "The Relationship between Crime and Economic Growth in Malaysia: Re-Examine Using Bound Test Approach" çalışması, uzun dönemde ekonomik büyümenin suça yönelik etkisinin pozitif ve istatistiksel olarak anlamlı olduğunu ortaya koymuştur. Ayrıca, bu çalışma, suç ve ekonomik büyüme arasında kısa dönemde çift yönlü bir nedensellik ilişkisi olduğunu göstermiştir.
+
+ Bu çalışmaların bir araya getirilmesiyle, suç ve ekonomi arasındaki ilişkinin karmaşık olduğu ve ekonomik refah seviyesinin suç olayları üzerinde önemli bir etkisi olduğu sonucuna varılmaktadır. Ancak, tam olarak anlaşılabilmesi için daha fazla araştırmaya ihtiyaç duyulmaktadır. Bu çalışma, Avrupa ülkelerindeki ekonomik refah seviyeleri ile suç oranları arasındaki ilişkiyi inceleyerek, literatüre değerli bir katkı sağlamayı hedeflemektedir.
+ 
+\newpage
+
+# Veri 
+ Eurostat üzerinden almış olduğum "suç oranları, gini oranları ve istihdam oranları" veri setlerini kendi içlerinde birleştirerek R ile işlemeye hazır hale getirdim. Devamında bu belgeleri R studio içine aktarıp satır ve sütun ayarlamalarını yaptım. Bu aşamadan sonra ise veri setlerimin içinden 6 adet birbirinden farklı AB ülkesi seçtim ve bu ülkelerin verilerini grafik yardımıyla görselleştirdim. Bu veriler sütun başlıklarında 2011-2020 yıllarını; satır başlıklarında ise ülkeleri içeren tablolar halindeydi. Verilerin grafiklerine bakarak Ülkeler hakkında yorum yapılabilir. başta saydığım 6 ülke içinden "İtalya'yı" seçerek verilerini birleştirdim ve devamında ise korelasyon analizi yaptım. AB ülkelerinin yıllara göre özet istatistik tabloları araştırmam içinde yer almaktadır.
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(readxl)
+
+calisan <- read_excel("C:/Users/HP/Desktop/EuroStat veri setleri/calısan oranı.xlsx")
+
+calisan <- calisan[-c(1:6), ]
+calisan <- calisan[, -c(2, 3, 4, 5, 6, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27)]
+calisan[, 2:11] <- lapply(calisan[, 2:11], as.numeric)
+names(calisan)[1] <- "country" 
+
+
+
+
+new_gini <- read_excel("C:/Users/HP/Desktop/EuroStat veri setleri/gelir esitsizligi.xlsx")
+new_gini <- new_gini[, -c(3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23)]
+new_gini[, 2:12] <- lapply(new_gini[, 2:12], as.numeric)
+names(new_gini)[1] <- "country"
+
+
+library(readxl)
+sucoran <- read_excel("C:/Users/HP/Desktop/EuroStat veri setleri/suç oranları 100k.xlsx")
+sucoran <- sucoran[, -c(2, 3, 4)]
+sucoran[, 2:11] <- lapply(sucoran[, 2:11], as.numeric)
+names(sucoran)[1] <- "country"
+
+```
+
+
+
+```{r, echo=FALSE}
+library(xtable) 
+# devtools::install_github("emraher/summarytools")
+library(summarytools)
+st_options(lang = "tr")
+```
+
+
+```{r results='asis', echo=FALSE}
+new_gini %>%
+  select("2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021") %>% 
+  descr(stats = c("mean", "sd", "min", "med", "max"), transpose = TRUE) %>% 
+  xtable(caption = "Özet İstatistikler",
+         label = "tab:ozet",
+         align = c("l", "c", "c", "c", "c", "c")) %>% 
+  print(booktabs = TRUE, comment = FALSE, caption.placement = "top")
+calisan %>%
+  select("2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2020") %>% 
+  descr(stats = c("mean", "sd", "min", "med", "max"), transpose = TRUE) %>% 
+  xtable(caption = "Özet İstatistikler",
+         label = "tab:ozet",
+         align = c("l", "c", "c", "c", "c", "c")) %>% 
+  print(booktabs = TRUE, comment = FALSE, caption.placement = "top")
+sucoran %>%
+  select("2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020") %>% 
+  descr(stats = c("mean", "sd", "min", "med", "max"), transpose = TRUE) %>% 
+  xtable(caption = "Özet İstatistikler",
+         label = "tab:ozet",
+         align = c("l", "c", "c", "c", "c", "c")) %>% 
+  print(booktabs = TRUE, comment = FALSE, caption.placement = "top")
+```
+
+
+\newpage
+
+# Yöntem ve Veri Analizi
+ Aşağıda "**Danimarka, İtalya, Fransa, Yunanistan, Bulgaristan, Romanya**" ülkelerinin 2011 yılından 2021 yılına kadar olan "**Gini Oranları, İstıhdam Oranları, Suç oranları**" sırasıyla ele alınarak incelenmiştir. Bu veriler grafiksel olarak biçimlenmiştir. İlgili ülkelerin grafiklerine bakılarak belirli yıllar arasındaki verilerini karşılaştırmak mümkün hale gelmiştir. Bu çalışmanın içerisinden "**İtalya**" ülkesinin "**İstihdam oranları ve Suç oranları**" ayrıca "**Gini oranı ve Suç oranları**" ayrı ayrı birleştirilip "**Korelasyon Analizleri**" yapılmıştır.     
+
+
+```{r results='asis', echo=FALSE}
+
+
+
+library(ggplot2)
+denmark_data <- new_gini[4, 2:11]
+denmark_data <- data.frame(year = as.numeric(names(denmark_data)), value = as.numeric(denmark_data))
+ggplot(denmark_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Gini Values", title = "Denmark Gini")
+
+
+
+italy_data <- new_gini[12, 2:11]
+italy_data <- data.frame(year = as.numeric(names(italy_data)), value = as.numeric(italy_data))
+ggplot(italy_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Gini Values", title = "Italy Gini")
+
+
+
+france_data <- new_gini[10, 2:11]
+france_data <- data.frame(year = as.numeric(names(france_data)), value = as.numeric(france_data))
+ggplot(france_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Gini Values", title = "France Gini")
+
+
+
+denmark_data <- sucoran[4, 2:11]
+denmark_data <- data.frame(year = as.numeric(names(denmark_data)), value = as.numeric(denmark_data))
+ggplot(denmark_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Crime Rate", title = "Denmark Crime Rate Over Time")
+
+
+
+italy_data <- sucoran[12, 2:11]
+italy_data <- data.frame(year = as.numeric(names(italy_data)), value = as.numeric(italy_data))
+ggplot(italy_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Crime Rate", title = "Italy Crime Rate Over Time")
+
+
+
+france_data <- sucoran[10, 2:11]
+france_data <- data.frame(year = as.numeric(names(france_data)), value = as.numeric(france_data))
+ggplot(france_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Crime Rate", title = "France Crime Rate Over Time")
+
+
+
+denmark_data <- calisan[4, 2:11]
+denmark_data <- data.frame(year = as.numeric(names(denmark_data)), value = as.numeric(denmark_data))
+ggplot(denmark_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Employment Rate", title = "Denmark Employment Rate Over Time")
+
+
+
+italy_data <- calisan[13, 2:11]
+italy_data <- data.frame(year = as.numeric(names(italy_data)), value = as.numeric(italy_data))
+ggplot(italy_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Employment Rate", title = "Italy Employment Rate Over Time")
+
+
+
+france_data <- calisan[10, 2:11]
+france_data <- data.frame(year = as.numeric(names(france_data)), value = as.numeric(france_data))
+ggplot(france_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Employment Rate", title = "France Employment Rate Over Time")
+
+
+
+library(ggplot2)
+greece_data <- new_gini[8, 2:11]
+greece_data <- data.frame(year = as.numeric(names(greece_data)), value = as.numeric(greece_data))
+ggplot(greece_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Gini Values", title = "Greece Gini")
+
+
+
+library(ggplot2)
+bulgaria_data <- new_gini[2, 2:11]
+bulgaria_data <- data.frame(year = as.numeric(names(bulgaria_data)), value = as.numeric(bulgaria_data))
+ggplot(bulgaria_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Gini Values", title = "Bulgaria Gini")
+
+
+
+library(ggplot2)
+romania_data <- new_gini[22, 2:11]
+romania_data <- data.frame(year = as.numeric(names(romania_data)), value = as.numeric(romania_data))
+ggplot(romania_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "Gini Values", title = "Romania Gini")
+
+
+
+library(ggplot2)
+greece_data <- sucoran[8, 2:11]
+greece_data <- data.frame(year = as.numeric(names(greece_data)), value = as.numeric(greece_data))
+ggplot(greece_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "crime rate", title = "greece crime rate")
+
+
+
+library(ggplot2)
+bulgaria_data <- sucoran[2, 2:11]
+bulgaria_data <- data.frame(year = as.numeric(names(bulgaria_data)), value = as.numeric(bulgaria_data))
+ggplot(bulgaria_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "crime rate", title = "Bulgaria crime rate")
+
+
+
+library(ggplot2)
+romania_data <- sucoran[23, 2:11]
+romania_data <- data.frame(year = as.numeric(names(romania_data)), value = as.numeric(romania_data))
+ggplot(romania_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "crime rate", title = "Romania crime rate")
+
+
+
+library(ggplot2)
+greece_data <- calisan[8, 2:11]
+greece_data <- data.frame(year = as.numeric(names(greece_data)), value = as.numeric(greece_data))
+ggplot(greece_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "employment rate", title = "Greece employment rate")
+
+
+
+library(ggplot2)
+bulgaria_data <- calisan[2, 2:11]
+bulgaria_data <- data.frame(year = as.numeric(names(bulgaria_data)), value = as.numeric(bulgaria_data))
+ggplot(bulgaria_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "employment rate", title = "Bulgaria employment rate")
+
+
+
+library(ggplot2)
+romania_data <- calisan[24, 2:11]
+romania_data <- data.frame(year = as.numeric(names(romania_data)), value = as.numeric(romania_data))
+ggplot(romania_data, aes(x = year, y = value)) +
+  geom_line() +
+  labs(x = "Year", y = "employment rate", title = "Romania employment rate")
+
+
+
+library(ggplot2)
+
+
+italy_gini <- new_gini[12, 2:11]
+italy_gini <- data.frame(year = as.numeric(names(italy_gini)), gini = as.numeric(italy_gini))
+
+
+italy_crime <- sucoran[13, 2:11]
+italy_crime <- data.frame(year = as.numeric(names(italy_crime)), crime_rate = as.numeric(italy_crime))
+
+
+italy_data <- merge(italy_gini, italy_crime, by = "year")
+
+
+correlation_test <- cor.test(italy_data$gini, italy_data$crime_rate)
+
+
+result_table <- data.frame(
+  Test = "Pearson's product-moment correlation",
+  Data = "italy_data",
+  t_value = correlation_test$statistic,
+  df = correlation_test$parameter,
+  p_value = correlation_test$p.value,
+  alternative = correlation_test$alternative,
+  confidence_interval = paste(correlation_test$conf.int[1], correlation_test$conf.int[2], sep = " - "),
+  estimate = correlation_test$estimate
+)
+
+knitr::kable(result_table, format = "latex", booktabs = TRUE, caption = "İtalya'nın Gini oranı ile suç oranlarının korelasyonu")
+
+
+
+italy_calisan <- calisan[13, 2:11]
+italy_calisan <- data.frame(year = as.numeric(names(italy_calisan)), calisan = as.numeric(italy_calisan))
+
+
+italy_crime <- sucoran[13, 2:11]
+italy_crime <- data.frame(year = as.numeric(names(italy_crime)), crime_rate = as.numeric(italy_crime))
+
+
+italy_data2 <- merge(italy_calisan, italy_crime, by = "year")
+
+
+correlation_test <- cor.test(italy_data2$calisan, italy_data2$crime_rate)
+
+
+result_table <- data.frame(
+  Test = "Pearson's product-moment correlation",
+  Data = "italy_data2",
+  t_value = correlation_test$statistic,
+  df = correlation_test$parameter,
+  p_value = correlation_test$p.value,
+  alternative = correlation_test$alternative,
+  confidence_interval = paste(correlation_test$conf.int[1], correlation_test$conf.int[2], sep = " - "),
+  estimate = correlation_test$estimate
+)
+
+knitr::kable(result_table, format = "latex", booktabs = TRUE, caption = "İtalya'nın suç oranları ile çalışan kişi oranları korelasyonu")
+
+```
+
+# Sonuç
+ Yapmış olduğum çalışmada kullandığım analiz yöntemi korelasyon analizi ile ilişkileri incelemek olmuştur. İtalya ülkesinin 2011 ile 2021 yılları arasındaki Gini oranı ve Suç oranı veri setlerini ayrı ayrı korelasyon analizine tabii tuttum.
+
+ İlk olarak, Gini oranı ile Suç oranı arasındaki ilişkiyi inceledim ve ters yönlü bir ilişki olduğunu gözlemledim. Yani, Gini oranındaki artışlarla Suç oranlarının azaldığı bir ilişki söz konusu oldu. Ancak, yapılan korelasyon analizi testinin gücünün düşük olduğunu gördüm. Bu durum, Gini oranı ile Suç oranı arasındaki ilişkinin istatistiksel olarak daha zayıf olduğunu ve diğer faktörlerin de bu ilişkiyi etkileyebileceğini göstermektedir. Dolayısıyla, Gini oranı ve Suç oranı arasındaki ilişkinin daha derinlemesine incelenmesi ve farklı analiz yöntemlerinin kullanılması gerekmektedir.
+
+ İkinci olarak, İstihdam oranı ile Suç oranlarını incelediğimde ise ters yönlü kuvvetli bir ilişki gözlemledim. Yani, İtalya'nın istihdam oranı arttıkça suç oranlarında ciddi bir azalış olduğu görüldü. Bu korelasyon analizi sonucu, İstihdam oranı ile Suç oranları arasındaki ilişkinin istatistiksel olarak daha güçlü ve anlamlı olduğunu göstermektedir.
+
+ Ancak, korelasyon analizi yalnızca değişkenler arasındaki ilişkiyi ölçmektedir ve sebep-sonuç ilişkisini doğrulamak için yeterli değildir. Bu nedenle, İtalya'da istihdam oranındaki artışın suç oranlarındaki azalışa neden olduğunu belirlemek için daha fazla analiz ve araştırma yapılması gerekmektedir. Diğer faktörlerin (sosyal, ekonomik, politik vb.) de dikkate alınması ve farklı testlerin uygulanması, daha net sonuçlara ulaşmamızı sağlayacaktır.  
+
+\newpage
+# Kaynakça {#references}
+<div id="refs"></div>
+
