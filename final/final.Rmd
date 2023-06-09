@@ -2,8 +2,8 @@
 title: "Suç Oranlarının Ekonomik Verilerle Bağdaşlaştırılması"
 author: 
   - İbrahim Batuhan Koc[^1]
-bibliography: ../new_final/bibliography
-csl: ../new_final/csl/apa-tr.csl
+bibliography: ../bibliography/biblio.bib
+csl: ../csl/apa-tr.csl
 header-includes:
   - \usepackage{polyglossia}
   - \setmainlanguage{turkish}
@@ -38,7 +38,7 @@ knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FAL
 <!-- ======================================================================= -->
 <!-- ============================== NOTLAR ================================= -->
 <!-- ======================================================================= -->
-[^1]: 21080156, [Github Repo](https://github.com/ibatuhankoc/final_odev.git)
+[^1]: 21080156, [Github Repo](https://github.com/ibatuhankoc/new_final.git)
 
 \newpage
 
@@ -80,7 +80,7 @@ knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FAL
 library(tidyverse)
 library(readxl)
 
-calisan <- read_excel("C:/Users/HP/Desktop/EuroStat veri setleri/calısan oranı.xlsx")
+calisan <- read_excel("C:/Users/HP/Desktop/new_final/new_final/data/calısan oranı.xlsx")
 
 calisan <- calisan[-c(1:6), ]
 calisan <- calisan[, -c(2, 3, 4, 5, 6, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27)]
@@ -90,14 +90,14 @@ names(calisan)[1] <- "country"
 
 
 
-new_gini <- read_excel("C:/Users/HP/Desktop/EuroStat veri setleri/gelir esitsizligi.xlsx")
+new_gini <- read_excel("C:/Users/HP/Desktop/new_final/new_final/data/gelir esitsizligi.xlsx")
 new_gini <- new_gini[, -c(3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23)]
 new_gini[, 2:12] <- lapply(new_gini[, 2:12], as.numeric)
 names(new_gini)[1] <- "country"
 
 
 library(readxl)
-sucoran <- read_excel("C:/Users/HP/Desktop/EuroStat veri setleri/suç oranları 100k.xlsx")
+sucoran <- read_excel("C:/Users/HP/Desktop/new_final/new_final/data/suç oranları 100k.xlsx")
 sucoran <- sucoran[, -c(2, 3, 4)]
 sucoran[, 2:11] <- lapply(sucoran[, 2:11], as.numeric)
 names(sucoran)[1] <- "country"
